@@ -3,7 +3,7 @@ Created on Aug 19, 2015
 
 @author: augus
 '''
-import sys
+import sys, datetime
 import MySQLdb
 import paho.mqtt.client as mqtt
 
@@ -31,9 +31,9 @@ def initdb():
 
 def saveTodb(db,message):
     cur = db.cursor()
-    sql = "insert into mqtt_rawmessages(message) value(%s)"
+    sql = "insert into mqtt_rawmessages(message,recvtime) value(%s,%s)" % (message.payload, datetime.datetime.now())
     try:
-        cur.executemany(sql,message.payload)
+        cur.execute(sql)
     except Exception, e:
         print e 
 
