@@ -22,7 +22,7 @@ def on_message(client,userdata,message):
 
 if __name__ == '__main__':
     print "Hello World"
-    mqttclient = mqtt.CLient()
+    mqttclient = mqtt.Client()
     mqttclient.on_connect = on_connect
     mqttclient.on_message = on_message
     mqttclient.connect("iot.darktech.org",1883,60)
