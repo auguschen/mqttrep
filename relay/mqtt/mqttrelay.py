@@ -4,7 +4,7 @@ Created on Aug 19, 2015
 @author: augus
 '''
 import MySQLdb
-import paho_mqtt_client as mqtt
+import paho.mqtt.client as mqtt
 
 def initdb():
     pass
