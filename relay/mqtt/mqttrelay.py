@@ -3,6 +3,7 @@ Created on Aug 19, 2015
 
 @author: augus
 '''
+import sys
 import MySQLdb
 import paho.mqtt.client as mqtt
 
@@ -17,8 +18,12 @@ mysqlport = 3306
 mysqluser = "mqtt"
 mysqlpass = "p2ssw0rd"
 mysqlprefix = "mqtt_"
+mysqldbname = "mqtt"
 def initdb():
-    pass
+    try:
+        return MySQLdn.connect(host=mysqlhost,user=mysqluser,passwd=mysqlpass,db=mysqldbname)
+    except Exception, e:
+        sys.exit()
 
 def saveTodb(db):
     pass
@@ -33,7 +38,9 @@ def on_message(client,userdata,message):
 
 
 if __name__ == '__main__':
-    print "Hello World"
+    print "Strating..."
+    curdb = initdb();
+    
     mqttclient = mqtt.Client()
     mqttclient.on_connect = on_connect
     mqttclient.on_message = on_message
