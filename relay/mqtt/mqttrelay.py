@@ -19,6 +19,9 @@ mysqluser = "mqtt"
 mysqlpass = "p2ssw0rd"
 mysqlprefix = "mqtt_"
 mysqldbname = "mqtt"
+
+curdb = null
+
 def initdb():
     try:
         return MySQLdb.connect(host=mysqlhost,user=mysqluser,passwd=mysqlpass,db=mysqldbname)
