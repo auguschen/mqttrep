@@ -23,6 +23,7 @@ def initdb():
     try:
         return MySQLdn.connect(host=mysqlhost,user=mysqluser,passwd=mysqlpass,db=mysqldbname)
     except Exception, e:
+        print e
         sys.exit()
 
 def saveTodb(db):
