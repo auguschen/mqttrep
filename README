@@ -1,0 +1,4 @@
+This project used for mqtt message save and relay
+use python receive the message and save to mysql database
+then publish the message to mqtt.
+
