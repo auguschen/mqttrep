@@ -20,7 +20,7 @@ mysqlpass = "p2ssw0rd"
 mysqlprefix = "mqtt_"
 mysqldbname = "mqtt"
 
-curdb = null
+curdb = None
 
 def initdb():
     try:
