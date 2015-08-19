@@ -29,8 +29,13 @@ def initdb():
         print e
         sys.exit()
 
-def saveTodb(db):
-    pass
+def saveTodb(db,message):
+    cur = db.cursor()
+    sql = "insert into mqtt_rawmessages(message) value(%s)"
+    try:
+        cur.executemany(sql,message.payload)
+    except Exception, e:
+        print e 
 
 def on_connect(client,userdata,flags,rc):
     print("Connected with result code "+str(rc))
@@ -38,7 +43,7 @@ def on_connect(client,userdata,flags,rc):
 
 def on_message(client,userdata,message):
     print(message.topic+" "+str(message.payload))
-#    saveTodb()
+    saveTodb(curdb,message)
 
 
 if __name__ == '__main__':
