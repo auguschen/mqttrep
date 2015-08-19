@@ -7,6 +7,8 @@ import sys, datetime
 import MySQLdb
 import paho.mqtt.client as mqtt
 
+DEBUG = True
+
 mqttserveraddr = "iot.darktech.org"
 mqttserverport = 1883
 
@@ -40,11 +42,13 @@ def saveTodb(db,message):
         curdb.rollback()
 
 def on_connect(client,userdata,flags,rc):
-    print("Connected with result code "+str(rc))
+    if (DEBUG): 
+        print("Connected with result code "+str(rc))
     client.subscribe(mqttmontopic)
 
 def on_message(client,userdata,message):
-    print(message.topic+" "+str(message.payload))
+    if (DEBUG): 
+        print(message.topic+" "+str(message.payload))
     saveTodb(curdb,message)
 
 
