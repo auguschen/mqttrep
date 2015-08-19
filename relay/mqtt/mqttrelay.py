@@ -31,11 +31,13 @@ def initdb():
 
 def saveTodb(db,message):
     cur = db.cursor()
-    sql = "insert into mqtt_rawmessages(message,recvtime) value(%s,%s)" % (message.payload, datetime.datetime.now())
+    sql = "insert into mqtt_rawmessages(topic_id, message,recvtime) value(3, '%s','%s')" % (message.payload, datetime.datetime.now())
     try:
         cur.execute(sql)
+        curdb.commit()
     except Exception, e:
         print e 
+        curdb.rollback()
 
 def on_connect(client,userdata,flags,rc):
     print("Connected with result code "+str(rc))
@@ -57,6 +59,7 @@ if __name__ == '__main__':
         mqttclient.connect(mqttserveraddr,mqttserverport,60)
         mqttclient.loop_forever()
     except KeyboardInterrupt:
+        curdb.close()
         mqttclient.disconnect()
         
     
