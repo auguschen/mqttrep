@@ -10,8 +10,8 @@ import paho.mqtt.client as mqtt
 mqttserveraddr = "iot.darktech.org"
 mqttserverport = 1883
 
-#mqttmontopic = "$INPUT"
-mqttmontopic = "tmp"
+mqttmontopic = "$INPUT"
+# mqttmontopic = "tmp"
 
 mysqlhost = "localhost"
 mysqlport = 3306
