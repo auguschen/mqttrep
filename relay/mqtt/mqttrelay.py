@@ -8,11 +8,13 @@ import MySQLdb
 import paho.mqtt.client as mqtt
 
 DEBUG = True
+SAVETODB = False
 
 mqttserveraddr = "iot.darktech.org"
 mqttserverport = 1883
 
-mqttmontopic = "$INPUT"
+# mqttmontopic = "$INPUT"
+mqttmontopic = "#"
 # mqttmontopic = "tmp"
 
 mysqlhost = "localhost"
@@ -49,7 +51,8 @@ def on_connect(client,userdata,flags,rc):
 def on_message(client,userdata,message):
     if (DEBUG): 
         print(message.topic+" "+str(message.payload))
-    saveTodb(curdb,message)
+    if (SAVETODB):
+        saveTodb(curdb,message)
 
 
 if __name__ == '__main__':
