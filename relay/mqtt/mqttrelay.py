@@ -45,7 +45,7 @@ def saveTodb(db,message):
 
 def on_connect(client,userdata,flags,rc):
     if (DEBUG): 
-        print(str(client)+" Connected with result code "+str(rc))
+        print(str(client.client_id)+" Connected with result code "+str(rc))
     client.subscribe(mqttmontopic+"/#")
 
 def on_message(client,userdata,message):
