@@ -13,8 +13,8 @@ SAVETODB = False
 mqttserveraddr = "iot.darktech.org"
 mqttserverport = 1883
 
-# mqttmontopic = "$INPUT"
-mqttmontopic = "#"
+mqttmontopic = "$INPUT"
+# mqttmontopic = "#"
 # mqttmontopic = "tmp"
 
 mysqlhost = "localhost"
@@ -46,7 +46,7 @@ def saveTodb(db,message):
 def on_connect(client,userdata,flags,rc):
     if (DEBUG): 
         print("Connected with result code "+str(rc))
-    client.subscribe(mqttmontopic)
+    client.subscribe(mqttmontopic+"/#")
 
 def on_message(client,userdata,message):
     if (DEBUG): 
