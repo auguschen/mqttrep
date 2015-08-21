@@ -56,7 +56,7 @@ def on_message(client,userdata,message):
 
 def on_subscribe(client, userdata, mid, granted_qos):
     if (DEBUG):
-        print("Subscribed." + " mid: "+ mid + " granted_qos: "+ str(granted_qos))
+        print("Subscribed.")
 
 
 if __name__ == '__main__':
@@ -66,7 +66,7 @@ if __name__ == '__main__':
     mqttclient = mqtt.Client(client_id=mqtt_client_id)
     mqttclient.on_connect = on_connect
     mqttclient.on_message = on_message
-    mqttclient.on_subscribe = on_subscribe
+#     mqttclient.on_subscribe = on_subscribe
     try:
         mqttclient.connect(mqtt_serveraddr,mqtt_serverport,60)
         mqttclient.loop_forever()
