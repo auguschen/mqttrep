@@ -56,7 +56,7 @@ def on_message(client,userdata,message):
 
 def on_subscribe(client, userdata, mid, granted_qos):
     if (DEBUG):
-        print("Subscribed." + " mid: "+ Str(mid) + " granted_qos: "+ granted_qos)
+        print("Subscribed." + " mid: "+ str(mid) + " granted_qos: "+ granted_qos)
 
 
 if __name__ == '__main__':
