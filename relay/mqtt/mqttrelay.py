@@ -10,13 +10,13 @@ import paho.mqtt.client as mqtt
 DEBUG = True
 SAVETODB = False
 
-mqttserveraddr = "iot.darktech.org"
-mqttserverport = 1883
-
-mqttmontopic = "$INPUT"
+mqtt_serveraddr = "iot.darktech.org"
+mqtt_serverport = 1883
+mqtt_client_id = "client_relay"
+mqtt_montopic = "$INPUT"
 # mqttmontopic = "#"
 # mqttmontopic = "tmp"
-
+mqtt_qos = 2
 mysqlhost = "localhost"
 mysqlport = 3306
 mysqluser = "mqtt"
@@ -45,8 +45,8 @@ def saveTodb(db,message):
 
 def on_connect(client,userdata,flags,rc):
     if (DEBUG): 
-        print(str(client)+" Connected with result code "+str(rc))
-    client.subscribe(mqttmontopic+"/#")
+        print(str(client.client_id)+" Connected with result code "+str(rc))
+    client.subscribe(mqtt_montopic+"/#", 2)
 
 def on_message(client,userdata,message):
     if (DEBUG): 
@@ -59,11 +59,11 @@ if __name__ == '__main__':
     print "Strating..."
     curdb = initdb();
     
-    mqttclient = mqtt.Client()
+    mqttclient = mqtt.Client(client_id=mqtt_client_id)
     mqttclient.on_connect = on_connect
     mqttclient.on_message = on_message
     try:
-        mqttclient.connect(mqttserveraddr,mqttserverport,60)
+        mqttclient.connect(mqtt_serveraddr,mqtt_serverport,60)
         mqttclient.loop_forever()
     except KeyboardInterrupt:
         curdb.close()
