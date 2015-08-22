@@ -46,7 +46,8 @@ def saveTodb(db,message):
     except Exception, e:
         print e 
         curdb.rollback()
-
+    cur.close()
+    
 def on_connect(client,userdata,flags,rc):
     if (DEBUG): 
         print("Connected with result code "+str(rc))
