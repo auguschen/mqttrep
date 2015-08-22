@@ -38,7 +38,9 @@ def initdb():
 
 def saveTodb(db,message):
     cur = db.cursor()
-    sql = "insert into mqtt_rawmessages(topic_id, message,recvtime) value(3, '%s','%s')" % (message.payload, datetime.datetime.now())
+    uni_payload = message.payload.decode('raw_unicode_escape')
+    print uni_payload
+    #sql = "insert into mqtt_rawmessages(topic_id, message,recvtime) value(3, '%s','%s')" % (message.payload, datetime.datetime.now())
     try:
         cur.execute(sql)
         curdb.commit()
@@ -54,6 +56,7 @@ def on_connect(client,userdata,flags,rc):
 def on_message(client,userdata,message):
     if (DEBUG): 
         print(message.topic+" "+str(message.payload))
+        print(message.payload.decode('raw_unicode_escape'))
     if (SAVETODB):
         saveTodb(curdb,message)
 
