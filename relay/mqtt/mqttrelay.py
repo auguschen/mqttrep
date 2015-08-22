@@ -3,6 +3,8 @@ Created on Aug 19, 2015
 
 @author: augus
 '''
+#-*- coding: utf-8 -*-
+
 import sys, datetime
 import MySQLdb
 import paho.mqtt.client as mqtt
@@ -29,7 +31,7 @@ curdb = None
 
 def initdb():
     try:
-        return MySQLdb.connect(host=mysqlhost,user=mysqluser,passwd=mysqlpass,db=mysqldbname)
+        return MySQLdb.connect(host=mysqlhost,user=mysqluser,passwd=mysqlpass,db=mysqldbname,charset="utf8")
     except Exception, e:
         print e
         sys.exit()
