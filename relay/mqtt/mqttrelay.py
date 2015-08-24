@@ -5,7 +5,7 @@ Created on Aug 19, 2015
 '''
 #-*- coding: utf-8 -*-
 
-import sys, datetime
+import sys, datetime, json
 import MySQLdb
 import paho.mqtt.client as mqtt
 
@@ -56,10 +56,12 @@ def on_connect(client,userdata,flags,rc):
 def on_message(client,userdata,message):
     if (DEBUG): 
         print(message.topic+" "+str(message.payload))
-        print(message.payload.client_id)
-        print(message.payload.message)
-        print(message.payload.topic)
-        print(message.payload.message_datetime)
+        jsonmessage = json.read(message)
+        print(jsonmessage);
+        print(jsonmessage.payload.client_id)
+        print(jsonmessage.payload.message)
+        print(jsonmessage.payload.topic)
+        print(jsonmessage.payload.message_datetime)
     if (SAVETODB):
         saveTodb(curdb,message)
 
