@@ -45,7 +45,7 @@ def initdb():
         print e
         sys.exit()
 
-def saveTodb(db,message):
+def saveTodb(message):
     db = pool.connection()
     cur = db.cursor()
 #     print message.payload.decode('raw_unicode_escape')
@@ -59,10 +59,12 @@ def saveTodb(db,message):
     sql = "insert into mqtt_detail_messages(client_id, payload,topic,message_datetime) value('%s', '%s', '%s', '%s')" % (client_id, message, topic, message_datetime)
     try:
         cur.execute(sql)
-        curdb.commit()
+#         curdb.commit()
+        db.commit()
     except Exception, e:
         print e 
-        curdb.rollback()
+#         curdb.rollback()
+        db.rollback()
     cur.close()
     db.close()
     
@@ -75,7 +77,9 @@ def on_message(client,userdata,message):
     if (DEBUG): 
         print(message.topic+" "+ message.payload.decode('raw_unicode_escape'))
     if (SAVETODB):
-        saveTodb(curdb,message)
+#         saveTodb(curdb,message)
+        saveTodb(message)
+        
 
 def on_subscribe(client, userdata, mid, granted_qos):
     if (DEBUG):
