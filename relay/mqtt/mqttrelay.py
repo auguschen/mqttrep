@@ -81,14 +81,14 @@ def on_message(client,userdata,message):
     if (SAVETODB):
 #         saveTodb(curdb,message)
         if (saveTodb(message)):
-            republish(message)
+            republish(client, message)
 #     republish to topic    
 
 def on_subscribe(client, userdata, mid, granted_qos):
     if (DEBUG):
         print("Subscribed.")
 
-def republish(message):
+def republish(client, message):
     jsonObj = json.loads(message.payload)
     client_id = jsonObj["client_id"]
     message = jsonObj["message"]
