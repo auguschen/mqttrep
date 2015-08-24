@@ -55,7 +55,11 @@ def on_connect(client,userdata,flags,rc):
 
 def on_message(client,userdata,message):
     if (DEBUG): 
-        print(message.topic+" "+ message.payload)
+        print(message.topic+" "+ message.payload.decode('raw_unicode_escape'))
+        print(message.payload.cliend_id.decode('raw_unicode_escape'))
+        print(message.payload.message.decode('raw_unicode_escape'))
+        print(message.payload.topic.decode('raw_unicode_escape'))
+        print(message.payload.message_datetime.decode('raw_unicode_escape'))
     if (SAVETODB):
         saveTodb(curdb,message)
 
