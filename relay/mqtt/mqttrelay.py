@@ -5,7 +5,7 @@ Created on Aug 19, 2015
 '''
 #-*- coding: utf-8 -*-
 
-import MySQLdb, json, threading
+import sys, MySQLdb, json, threading
 import paho.mqtt.client as mqtt
 from DBUtils.PooledDB import PooledDB
 
