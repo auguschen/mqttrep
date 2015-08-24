@@ -55,13 +55,7 @@ def on_connect(client,userdata,flags,rc):
 
 def on_message(client,userdata,message):
     if (DEBUG): 
-        print(message.topic+" "+str(message.payload))
-        jsonmessage = json.read(message)
-        print(jsonmessage);
-        print(jsonmessage.payload.client_id)
-        print(jsonmessage.payload.message)
-        print(jsonmessage.payload.topic)
-        print(jsonmessage.payload.message_datetime)
+        print(message.topic+" "+ message.payload)
     if (SAVETODB):
         saveTodb(curdb,message)
 
