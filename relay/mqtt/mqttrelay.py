@@ -56,6 +56,10 @@ def on_connect(client,userdata,flags,rc):
 def on_message(client,userdata,message):
     if (DEBUG): 
         print(message.topic+" "+str(message.payload))
+        print(message.payload.client_id)
+        print(message.payload.message)
+        print(message.payload.topic)
+        print(message.payload.message_datetime)
     if (SAVETODB):
         saveTodb(curdb,message)
 
