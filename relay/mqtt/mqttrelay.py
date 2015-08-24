@@ -10,8 +10,8 @@ import MySQLdb
 import paho.mqtt.client as mqtt
 
 DEBUG = True
-SAVETODB = False
-# SAVETODB = True
+# SAVETODB = False
+SAVETODB = True
 
 mqtt_serveraddr = "iot.darktech.org"
 mqtt_serverport = 1883
@@ -38,8 +38,15 @@ def initdb():
 
 def saveTodb(db,message):
     cur = db.cursor()
-    print message.payload.decode('raw_unicode_escape')
-    sql = "insert into mqtt_rawmessages(topic_id, message,recvtime) value(3, '%s','%s')" % (message.payload.decode('raw_unicode_escape'), datetime.datetime.now())
+#     print message.payload.decode('raw_unicode_escape')
+    jsonObj = json.loads(message.payload)
+    client_id = jsonObj["client_id"]
+    message = jsonObj["message"]
+    topic = jsonObj["topic"]
+    message_datetime = jsonObj["message_datetime"]
+    
+#     sql = "insert into mqtt_rawmessages(topic_id, message,recvtime) value(3, '%s','%s')" % (message.payload.decode('raw_unicode_escape'), datetime.datetime.now())
+    sql = "insert into mqtt_detail_message(client_id, payload,topic,message_datetime) value('%s', '%s', '%s', '%s')" % (client_id, message, topic, message_datetime)
     try:
         cur.execute(sql)
         curdb.commit()
@@ -56,10 +63,6 @@ def on_connect(client,userdata,flags,rc):
 def on_message(client,userdata,message):
     if (DEBUG): 
         print(message.topic+" "+ message.payload.decode('raw_unicode_escape'))
-        print(message.payload.cliend_id.decode('raw_unicode_escape'))
-        print(message.payload.message.decode('raw_unicode_escape'))
-        print(message.payload.topic.decode('raw_unicode_escape'))
-        print(message.payload.message_datetime.decode('raw_unicode_escape'))
     if (SAVETODB):
         saveTodb(curdb,message)
 
