@@ -61,10 +61,12 @@ def saveTodb(message):
         cur.execute(sql)
 #         curdb.commit()
         db.commit()
+        return True
     except Exception, e:
         print e 
 #         curdb.rollback()
         db.rollback()
+        return False
     cur.close()
     db.close()
     
@@ -78,13 +80,21 @@ def on_message(client,userdata,message):
         print(message.topic+" "+ message.payload.decode('raw_unicode_escape'))
     if (SAVETODB):
 #         saveTodb(curdb,message)
-        saveTodb(message)
-        
+        if (saveTodb(message)):
+            republish(message)
+#     republish to topic    
 
 def on_subscribe(client, userdata, mid, granted_qos):
     if (DEBUG):
         print("Subscribed.")
 
+def republish(message):
+    jsonObj = json.loads(message.payload)
+    client_id = jsonObj["client_id"]
+    message = jsonObj["message"]
+    topic = jsonObj["topic"]
+    message_datetime = jsonObj["message_datetime"]
+    client.publish(topic, message, 2)
 
 if __name__ == '__main__':
     print "Strating..."
