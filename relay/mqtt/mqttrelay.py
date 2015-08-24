@@ -33,7 +33,7 @@ pool = None
 
 def initPool():
     try:
-        return PooledDB.PooledDB(MySQLdb,100,50,100,490,False,host=mysqlhost,user=mysqluser,passwd=mysqlpass,db=mysqldbname,charset='utf8') 
+        return PooledDB.PooledDB(MySQLdb,10,50,50,100,False,host=mysqlhost,user=mysqluser,passwd=mysqlpass,db=mysqldbname,charset='utf8') 
     except Exception, e:
         print e
         sys.exit()
@@ -46,7 +46,8 @@ def initdb():
         sys.exit()
 
 def saveTodb(db,message):
-    cur = pool.connection().cursor()
+    db = pool.connection()
+    cur = db.cursor()
 #     print message.payload.decode('raw_unicode_escape')
     jsonObj = json.loads(message.payload)
     client_id = jsonObj["client_id"]
@@ -63,6 +64,7 @@ def saveTodb(db,message):
         print e 
         curdb.rollback()
     cur.close()
+    db.close()
     
 def on_connect(client,userdata,flags,rc):
     if (DEBUG): 
