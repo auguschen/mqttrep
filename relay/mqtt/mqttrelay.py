@@ -33,7 +33,7 @@ pool = None
 
 def initPool():
     try:
-        return PooledDB.PooledMySQL(MySQLdb,10,50,50,100,False,host=mysqlhost,user=mysqluser,passwd=mysqlpass,db=mysqldbname,charset='utf8') 
+        return PooledDB(MySQLdb,10,50,50,100,False,host=mysqlhost,user=mysqluser,passwd=mysqlpass,db=mysqldbname,charset='utf8') 
     except Exception, e:
         print e
         sys.exit()
