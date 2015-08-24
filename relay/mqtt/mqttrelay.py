@@ -10,8 +10,8 @@ import MySQLdb
 import paho.mqtt.client as mqtt
 
 DEBUG = True
-# SAVETODB = False
-SAVETODB = True
+SAVETODB = False
+# SAVETODB = True
 
 mqtt_serveraddr = "iot.darktech.org"
 mqtt_serverport = 1883
