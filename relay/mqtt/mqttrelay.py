@@ -5,9 +5,9 @@ Created on Aug 19, 2015
 '''
 #-*- coding: utf-8 -*-
 
-import sys, datetime, json
-import MySQLdb
+import MySQLdb, json, threading
 import paho.mqtt.client as mqtt
+from DBUtils.PooledDB import PooledDB
 
 DEBUG = True
 # SAVETODB = False
@@ -27,8 +27,17 @@ mysqlpass = "p2ssw0rd"
 mysqlprefix = "mqtt_"
 mysqldbname = "mqtt"
 
-curdb = None
+pool = None
 
+# curdb = None
+
+def initPool():
+    try:
+        return PooledDB.PooledDB(MySQLdb,100,50,100,490,False,host=mysqlhost,user=mysqluser,passwd=mysqlpass,db=mysqldbname,charset='utf8') 
+    except Exception, e:
+        print e
+        sys.exit()
+    
 def initdb():
     try:
         return MySQLdb.connect(host=mysqlhost,user=mysqluser,passwd=mysqlpass,db=mysqldbname,charset="utf8")
@@ -37,7 +46,7 @@ def initdb():
         sys.exit()
 
 def saveTodb(db,message):
-    cur = db.cursor()
+    cur = pool.connection().cursor()
 #     print message.payload.decode('raw_unicode_escape')
     jsonObj = json.loads(message.payload)
     client_id = jsonObj["client_id"]
@@ -73,7 +82,8 @@ def on_subscribe(client, userdata, mid, granted_qos):
 
 if __name__ == '__main__':
     print "Strating..."
-    curdb = initdb();
+    pool = initPool();
+#     curdb = initdb();
     
     mqttclient = mqtt.Client(client_id=mqtt_client_id)
     mqttclient.on_connect = on_connect
@@ -83,7 +93,8 @@ if __name__ == '__main__':
         mqttclient.connect(mqtt_serveraddr,mqtt_serverport,60)
         mqttclient.loop_forever()
     except KeyboardInterrupt:
-        curdb.close()
+#         curdb.close()
+        pool.close();
         mqttclient.disconnect()
         
     
