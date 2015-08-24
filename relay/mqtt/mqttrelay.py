@@ -50,7 +50,7 @@ def saveTodb(message):
     topic = jsonObj["topic"]
     message_datetime = jsonObj["message_datetime"]
     
-    sql = "insert into mqtt_detail_messages(client_id, payload,topic,message_datetime) value('%s', '%s', '%s', '%s')" % (client_id, message, topic, message_datetime)
+    sql = "insert into mqtt_messages(client_id, payload,topic,message_datetime) value('%s', '%s', '%s', '%s')" % (client_id, message, topic, message_datetime)
     try:
         cur.execute(sql)
         db.commit()
