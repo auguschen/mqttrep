@@ -14,7 +14,7 @@ DEBUG = True
 SAVETODB = True
 
 mqtt_serveraddr = "iot.darktech.org"
-mqtt_serverport = 1883
+mqtt_serverport = 14998
 mqtt_client_id = "client_relay"
 mqtt_montopic = "$INPUT"
 mqtt_qos = 2
