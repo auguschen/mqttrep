@@ -13,12 +13,12 @@ DEBUG = True
 
 SAVETODB = True
 
-mqtt_serveraddr = "iot.darktech.org"
+mqtt_serveraddr = "localhost"
 mqtt_serverport = 14998
 mqtt_client_id = "client_relay"
 mqtt_montopic = "$INPUT"
 mqtt_qos = 2
-mysqlhost = "iot.darktech.org"
+mysqlhost = "localhost"
 mysqlport = 3306
 mysqluser = "mqtt"
 mysqlpass = "p2ssw0rd"
